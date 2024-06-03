@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Función para obtener productos desde la API
     const fetchProducts = async () => {
         try {
-            const response = await fetch('http://localhost:3000/products');
+            const response = await fetch('https://challenge-alurageek-sable.vercel.app/products');
             if (!response.ok) {
                 throw new Error('Error en la respuesta de la API');
             }
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 };
 
                 try {
-                    const response = await fetch('http://localhost:3000/products', {
+                    const response = await fetch('https://challenge-alurageek-sable.vercel.app/products', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const productId = event.target.closest('button').dataset.id;
 
         try {
-            const response = await fetch(`http://localhost:3000/products/${productId}`, {
+            const response = await fetch(`https://challenge-alurageek-sable.vercel.app/products/${productId}`, {
                 method: 'DELETE'
             });
             if (response.ok) {
