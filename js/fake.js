@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 const baseUrl= './products';
 
 const fetchProducts = async () => {
     try {
         const response = await fetch(baseUrl);
+=======
+const vercelUrl = 'https://challenge-alurageek-sable.vercel.app/';
+const fetchProducts = async () => {
+    try {
+        const response = await fetch('https://challenge-alurageek-sable.vercel.app/products');
+>>>>>>> 70db13313614a92f5f127f04db2b0608f5966546
         if (!response.ok) {
             throw new Error('Error en la respuesta de la API');
         }
@@ -50,7 +57,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
         try {
+<<<<<<< HEAD
             const response = await fetch(baseUrl, {
+=======
+            const response = await fetch('https://challenge-alurageek-sable.vercel.app/products', {
+>>>>>>> 70db13313614a92f5f127f04db2b0608f5966546
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
