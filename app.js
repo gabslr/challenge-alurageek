@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const productList = document.querySelector('.product-list');
     const form = document.querySelector('#add-product-form');
+    const baseUrl= './products';
 
     // Función para obtener productos desde la API
     const fetchProducts = async () => {
         try {
-            const response = await fetch('http://localhost:3000/products');
+            const response = await fetch(baseUrl);
             if (!response.ok) {
                 throw new Error('Error en la respuesta de la API');
             }
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 };
 
                 try {
-                    const response = await fetch('http://localhost:3000/products', {
+                    const response = await fetch(baseUrl, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
