@@ -35,8 +35,8 @@ export default function handler(req, res) {
                 console.log('Updated products:', products);
                 res.status(201).json(newProduct);
             } catch (error) {
-                console.error('Error al procesar la solicitud POST:', error);
-                res.status(500).json({ message: 'Error interno del servidor' });
+                console.error('Error al procesar la solicitud POST:', error.message);
+                res.status(500).json({ message: 'Error interno del servidor', error: error.message });
             }
         });
     } else if (req.method === 'DELETE') {

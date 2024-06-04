@@ -75,7 +75,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         loadAndDisplayProducts();
                         form.reset();
                     } else {
-                        console.error('Error al agregar producto:', response.statusText);
+                        const errorResponse = await response.json();
+                        console.error('Error al agregar producto:', response.statusText, errorResponse);
                     }
                 } catch (error) {
                     console.error('Error al agregar producto:', error);
