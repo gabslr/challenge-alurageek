@@ -7,10 +7,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const fetchProducts = async () => {
         try {
             const response = await fetch(apiUrl);
+            console.log('Fetch products response:', response);
             if (!response.ok) {
                 throw new Error('Error en la respuesta de la API');
             }
             const products = await response.json();
+            console.log('Fetched products:', products);
             return Array.isArray(products) ? products : [];
         } catch (error) {
             console.error('Error al obtener productos:', error);
@@ -19,6 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const displayProducts = (products) => {
+        console.log('Displaying products:', products);
         productList.innerHTML = '';
         products.forEach(product => {
             const productElement = document.createElement('div');
@@ -44,10 +47,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const addProduct = async (event) => {
         event.preventDefault();
+        console.log('Add product event triggered');
         const formData = new FormData(form);
         const file = formData.get('imagen');
 
         if (file && file.type.startsWith('image/')) {
+            console.log('File selected:', file);
             const reader = new FileReader();
             reader.onloadend = async () => {
                 const newProduct = {
@@ -55,6 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     price: formData.get('precio'),
                     image: reader.result // base64 encoded image
                 };
+                console.log('New product to add:', newProduct);
 
                 try {
                     const response = await fetch(apiUrl, {
@@ -64,6 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         },
                         body: JSON.stringify(newProduct)
                     });
+                    console.log('Add product response:', response);
                     if (response.ok) {
                         loadAndDisplayProducts();
                         form.reset();
@@ -82,11 +89,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const handleDelete = async (event) => {
         const productId = event.target.closest('button').dataset.id;
+        console.log('Delete product id:', productId);
 
         try {
             const response = await fetch(`${apiUrl}?id=${productId}`, {
                 method: 'DELETE'
             });
+            console.log('Delete product response:', response);
             if (response.ok) {
                 loadAndDisplayProducts();
             } else {
