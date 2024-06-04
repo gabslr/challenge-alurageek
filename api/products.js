@@ -36,7 +36,7 @@ export default async function handler(req, res) {
                     if (result.insertedCount === 1) {
                         const insertedProduct = await collection.findOne({ _id: result.insertedId });
                         console.log('Inserted product:', insertedProduct);
-                        res.status(201).json(insertedProduct);
+                        res.status(200).json(insertedProduct);
                     } else {
                         throw new Error('Failed to insert product');
                     }
