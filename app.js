@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const productList = document.querySelector('.product-list');
     const form = document.querySelector('#add-product-form');
 
-    const apiUrl = '/api/products';
+    const apiUrl = './products';
 
     const fetchProducts = async () => {
         try {
