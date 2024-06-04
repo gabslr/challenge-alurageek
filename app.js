@@ -72,20 +72,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     });
                     console.log('Add product response:', response);
                     if (response.ok) {
-                        const addedProduct = await response.json();
-                        console.log('Added product:', addedProduct);
-                        // Añadir el nuevo producto directamente al DOM sin necesidad de recargar todos los productos
-                        const productElement = document.createElement('div');
-                        productElement.classList.add('product');
-                        productElement.innerHTML = `
-                            <img src="${addedProduct.image}" alt="${addedProduct.name}">
-                            <p>${addedProduct.name}</p>
-                            <p>$${addedProduct.price}</p>
-                            <button class="delete-btn" data-id="${addedProduct._id}"><i class="fas fa-trash-alt"></i></button>
-                        `;
-                        productList.appendChild(productElement);
-                        productElement.querySelector('.delete-btn').addEventListener('click', handleDelete);
-                        form.reset();
+                        // Recargar la página para actualizar la lista de productos
+                        window.location.reload();
                     } else {
                         const errorResponse = await response.json();
                         console.error('Error al agregar producto:', response.statusText, errorResponse);
