@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const productList = document.querySelector('.product-list');
     const form = document.querySelector('#add-product-form');
     const baseUrl= './products';
+    //const baseUrl= 'http://localhost:3000/products'; // apiUrl para pruebas en localhost
+
 
     // Función para obtener productos desde la API
     const fetchProducts = async () => {
