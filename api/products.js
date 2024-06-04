@@ -1,11 +1,9 @@
 const { MongoClient, ObjectId } = require('mongodb');
 
-// Cargar las variables de entorno en desarrollo local
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-// Usar las variables de entorno para las credenciales de la base de datos
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.DB_NAME;
 
@@ -44,9 +42,14 @@ export default async function handler(req, res) {
         } else if (req.method === 'DELETE') {
             const { id } = req.query;
             console.log('DELETE product id:', id);
-            const result = await collection.deleteOne({ _id: new ObjectId(id) });
-            console.log('Deleted count:', result.deletedCount);
-            res.status(204).end();
+            try {
+                const result = await collection.deleteOne({ _id: new ObjectId(id) });
+                console.log('Deleted count:', result.deletedCount);
+                res.status(204).end();
+            } catch (error) {
+                console.error('Error al procesar la solicitud DELETE:', error.message);
+                res.status(500).json({ message: 'Error interno del servidor', error: error.message });
+            }
         } else {
             console.log('Method not allowed');
             res.status(405).json({ message: 'Method not allowed' });

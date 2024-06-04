@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <img src="${product.image}" alt="${product.name}">
                 <p>${product.name}</p>
                 <p>$${product.price}</p>
-                <button class="delete-btn" data-id="${product.id}"><i class="fas fa-trash-alt"></i></button>
+                <button class="delete-btn" data-id="${product._id}"><i class="fas fa-trash-alt"></i></button>
             `;
             productList.appendChild(productElement);
         });
