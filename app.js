@@ -12,12 +12,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error('Error en la respuesta de la API');
             }
             const products = await response.json();
-            return products;
+            console.log('Productos recibidos:', products); // Agrega este log
+            return Array.isArray(products) ? products : [];
         } catch (error) {
             console.error('Error al obtener productos:', error);
             return [];
         }
     };
+    
 
     // Función para mostrar los productos en el DOM
     const displayProducts = (products) => {
