@@ -33,7 +33,7 @@ export default async function handler(req, res) {
                     console.log('Parsed new product:', newProduct);
                     const result = await collection.insertOne(newProduct);
                     console.log('Inserted product:', result.ops[0]);
-                    res.status(201).json(result.ops[0]);
+                    res.status(201).json(result.ops[0]); // Asegurarse de enviar el producto creado
                 } catch (error) {
                     console.error('Error al procesar la solicitud POST:', error.message);
                     res.status(500).json({ message: 'Error interno del servidor', error: error.message });

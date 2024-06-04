@@ -72,7 +72,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     });
                     console.log('Add product response:', response);
                     if (response.ok) {
-                        loadAndDisplayProducts();
+                        const addedProduct = await response.json();
+                        console.log('Added product:', addedProduct);
+                        // Actualizar la lista de productos sin recargar
+                        const products = await fetchProducts();
+                        displayProducts(products);
                         form.reset();
                     } else {
                         const errorResponse = await response.json();
