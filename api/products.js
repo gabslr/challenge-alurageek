@@ -17,11 +17,22 @@ export default function handler(req, res) {
         products = readProductsFromFile(); // Leer productos en cada petición GET
         res.status(200).json(products);
     } else if (req.method === 'POST') {
-        const newProduct = req.body;
-        newProduct.id = products.length + 1;
-        products.push(newProduct);
-        fs.writeFileSync(dbFilePath, JSON.stringify({ products }, null, 2));
-        res.status(201).json(newProduct);
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString(); // convertir Buffer a string
+        });
+        req.on('end', () => {
+            try {
+                const newProduct = JSON.parse(body);
+                newProduct.id = products.length + 1;
+                products.push(newProduct);
+                fs.writeFileSync(dbFilePath, JSON.stringify({ products }, null, 2));
+                res.status(201).json(newProduct);
+            } catch (error) {
+                console.error('Error al procesar la solicitud POST:', error);
+                res.status(500).json({ message: 'Error interno del servidor' });
+            }
+        });
     } else if (req.method === 'DELETE') {
         const { id } = req.query;
         products = products.filter(product => product.id !== parseInt(id, 10));

@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const apiUrl = '/api/products';
 
-    // Función para obtener productos desde la API
     const fetchProducts = async () => {
         try {
             const response = await fetch(apiUrl);
@@ -12,16 +11,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error('Error en la respuesta de la API');
             }
             const products = await response.json();
-            console.log('Productos recibidos:', products); // Agrega este log
             return Array.isArray(products) ? products : [];
         } catch (error) {
             console.error('Error al obtener productos:', error);
             return [];
         }
     };
-    
 
-    // Función para mostrar los productos en el DOM
     const displayProducts = (products) => {
         productList.innerHTML = '';
         products.forEach(product => {
@@ -36,19 +32,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             productList.appendChild(productElement);
         });
 
-        // Añadir evento de clic a todos los botones de eliminación
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', handleDelete);
         });
     };
 
-    // Función para cargar productos y mostrarlos
     const loadAndDisplayProducts = async () => {
         const products = await fetchProducts();
         displayProducts(products);
     };
 
-    // Función para agregar un nuevo producto
     const addProduct = async (event) => {
         event.preventDefault();
         const formData = new FormData(form);
@@ -74,6 +67,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (response.ok) {
                         loadAndDisplayProducts();
                         form.reset();
+                    } else {
+                        console.error('Error al agregar producto:', response.statusText);
                     }
                 } catch (error) {
                     console.error('Error al agregar producto:', error);
@@ -85,7 +80,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // Función para manejar la eliminación de productos
     const handleDelete = async (event) => {
         const productId = event.target.closest('button').dataset.id;
 
@@ -104,7 +98,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     form.addEventListener('submit', addProduct);
-
-    // Cargar y mostrar productos al cargar la página
     await loadAndDisplayProducts();
 });
