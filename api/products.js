@@ -33,14 +33,12 @@ export default async function handler(req, res) {
                     console.log('Parsed new product:', newProduct);
                     const result = await collection.insertOne(newProduct);
                     console.log('Insert result:', result);
-                    if (result.insertedCount === 1) {
+                    if (result.acknowledged) {
                         const insertedProduct = await collection.findOne({ _id: result.insertedId });
                         console.log('Inserted product:', insertedProduct);
-                        res.status(500).json(insertedProduct);  // Usar 201 para creación exitosa
-                        console.log('Response code:', res.statusCode); // Mostrar el response code recibido
+                        res.status(201).json(insertedProduct);  // Usar 201 para creación exitosa
                     } else {
                         throw new Error('Failed to insert product');
-                        console.log('Response code:', res.statusCode);
                     }
                 } catch (error) {
                     console.error('Error al procesar la solicitud POST:', error.message);
@@ -54,7 +52,6 @@ export default async function handler(req, res) {
                 const result = await collection.deleteOne({ _id: new ObjectId(id) });
                 console.log('Deleted count:', result.deletedCount);
                 res.status(204).end();
-                console.log('Response code: 204');
             } catch (error) {
                 console.error('Error al procesar la solicitud DELETE:', error.message);
                 res.status(500).json({ message: 'Error interno del servidor', error: error.message });
@@ -62,11 +59,9 @@ export default async function handler(req, res) {
         } else {
             console.log('Method not allowed');
             res.status(405).json({ message: 'Method not allowed' });
-            console.log('Response code: 405');
         }
     } catch (error) {
         console.error('Error handling request:', error.message);
         res.status(500).json({ message: 'Error interno del servidor', error: error.message });
-        console.log('Response code: 500');
     }
 }
