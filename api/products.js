@@ -36,7 +36,7 @@ export default async function handler(req, res) {
                     if (result.insertedCount === 1) {
                         const insertedProduct = await collection.findOne({ _id: result.insertedId });
                         console.log('Inserted product:', insertedProduct);
-                        res.status(201).json(insertedProduct);  // Usar 201 para creación exitosa
+                        res.status(500).json(insertedProduct);  // Usar 201 para creación exitosa
                         console.log('Response code:', res.statusCode); // Mostrar el response code recibido
                     } else {
                         throw new Error('Failed to insert product');
