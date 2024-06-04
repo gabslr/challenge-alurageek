@@ -33,9 +33,10 @@ export default async function handler(req, res) {
                     console.log('Parsed new product:', newProduct);
                     const result = await collection.insertOne(newProduct);
                     console.log('Insert result:', result);
-                    if (result && result.ops && result.ops.length > 0) {
-                        console.log('Inserted product:', result.ops[0]);
-                        res.status(201).json(result.ops[0]);
+                    if (result.insertedCount === 1) {
+                        const insertedProduct = await collection.findOne({ _id: result.insertedId });
+                        console.log('Inserted product:', insertedProduct);
+                        res.status(201).json(insertedProduct);
                     } else {
                         throw new Error('Failed to insert product');
                     }

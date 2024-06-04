@@ -74,9 +74,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (response.ok) {
                         const addedProduct = await response.json();
                         console.log('Added product:', addedProduct);
-                        // Actualizar la lista de productos sin recargar
-                        const products = await fetchProducts();
-                        displayProducts(products);
+                        // Añadir el nuevo producto directamente al DOM sin necesidad de recargar todos los productos
+                        const productElement = document.createElement('div');
+                        productElement.classList.add('product');
+                        productElement.innerHTML = `
+                            <img src="${addedProduct.image}" alt="${addedProduct.name}">
+                            <p>${addedProduct.name}</p>
+                            <p>$${addedProduct.price}</p>
+                            <button class="delete-btn" data-id="${addedProduct._id}"><i class="fas fa-trash-alt"></i></button>
+                        `;
+                        productList.appendChild(productElement);
+                        productElement.querySelector('.delete-btn').addEventListener('click', handleDelete);
                         form.reset();
                     } else {
                         const errorResponse = await response.json();
@@ -102,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             console.log('Delete product response:', response);
             if (response.ok) {
-                loadAndDisplayProducts();
+                event.target.closest('.product').remove(); // Eliminar el producto del DOM directamente
             } else {
                 console.error('Error al eliminar producto:', response.statusText);
             }
